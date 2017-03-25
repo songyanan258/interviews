@@ -64,12 +64,12 @@ public class ConnectUrl {
         String str = Util.connectUrl("user",null);
 
         FormBody body = new FormBody.Builder()
-                .add("where","{'username':'admin','password':'1234'}").build();
+                .add("where","{\"username\":\"admin\"}").build();
         Request request = new Request.Builder()
                 .url(str)
                 .addHeader(Cons.APPLICATION_ID,Cons.APPLICATION_ID_VALUE)
                 .addHeader(Cons.APPLICATION_KEY,Cons.APPLICATION_KEY_VALUE)
-                .addHeader(Cons.CONTENT_TYPE,Cons.CONTENT_TYPE_JSON)
+//                .addHeader(Cons.CONTENT_TYPE,Cons.CONTENT_TYPE_JSON)
                 .post(body)
                 .build();
 

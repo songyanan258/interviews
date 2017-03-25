@@ -310,6 +310,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return super.onCreateOptionsMenu(menu);
     }
     public void postUser(){
+
         ConnectUrl connectUrl = new ConnectUrl(new UrlResout() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -318,10 +319,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onSuccess(Call call, Response response) throws IOException {
-                Log.i("synnn",response.toString());
+                Log.i("synnn",response.body().string());
             }
         });
-        connectUrl.login("123","123");
+        connectUrl.login("","");
 
     }
 }
