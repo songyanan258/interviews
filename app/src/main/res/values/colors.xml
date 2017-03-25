@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+
+    <!--color_indigo_lignt_blue-->
+    <color name="primary">#3F51B5</color>
+    <color name="primary_dark">#303F9F</color>
+    <color name="primary_light">#C5CAE9</color>
+    <color name="accent">#03A9F4</color>
+    <color name="primary_text">#212121</color>
+    <color name="secondary_text">#757575</color>
+    <color name="icons">#FFFFFF</color>
+    <color name="divider">#BDBDBD</color>
+    <color name="Indigo_colorPrimaryDark">#303f9f</color>
+    <color name="Indigo_colorPrimary">#3f51b5</color>
+    <color name="Indigo_nav_color">#4675FF</color>
+    <color name="line_gray">#ccc</color>
+    <color name="gray600">#767676</color>
+    <color name="line_trans">#46757575</color>
+    <color name="toolbar_text">#ffffff</color>
+    <color name="third_Qq">#1296db</color>
+    <color name="third_WebChat">#18d925</color>
+    <color name="third_WeiBo">#f52308</color>
+    <color name="back_gray">#ddd</color>
+</resources>

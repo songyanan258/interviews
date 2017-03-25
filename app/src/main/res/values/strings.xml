@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Interview</string>
+    <string name="draw_open">打开菜单</string>
+    <string name="draw_close">关闭菜单</string>
+    <string name="third_QQ">&#xe61c;</string>
+    <string name="third_WebChat">&#xe61d;</string>
+    <string name="third_WeiBo">&#xe600;</string>
+    <string name="tiaokuan">请阅读《服务条款》和《用户协议》</string>
+</resources>
