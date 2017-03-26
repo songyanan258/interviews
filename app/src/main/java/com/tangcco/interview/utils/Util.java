@@ -7,15 +7,13 @@ import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.Toast;
 
-import okhttp3.OkHttpClient;
-
 /**
  * Created by YN on 2017/3/19.
  */
 
 public class Util {
 
-    public static  OkHttpClient okHttpClient;
+//    public static  OkHttpClient okHttpClient;
 
 
     public static void mToast (Context context,String text){

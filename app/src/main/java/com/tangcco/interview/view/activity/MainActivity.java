@@ -19,20 +19,20 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.tangcco.interview.R;
-import com.tangcco.interview.presenter.UrlResout;
-import com.tangcco.interview.utils.ConnectUrl;
+import com.tangcco.interview.bean.tupian;
+import com.tangcco.interview.utils.Cons;
 import com.tangcco.interview.utils.Util;
 import com.tangcco.interview.view.fragment.LianxiFragment;
 import com.tangcco.interview.view.fragment.shangchuanFragment;
 import com.tangcco.interview.view.fragment.tikuFragment;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import okhttp3.Call;
-import okhttp3.Response;
+import cn.bmob.v3.Bmob;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.SaveListener;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -310,19 +310,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return super.onCreateOptionsMenu(menu);
     }
     public void postUser(){
-
-        ConnectUrl connectUrl = new ConnectUrl(new UrlResout() {
+        Bmob.initialize(this, Cons.APPLICATION_ID_VALUE);
+        tupian users = new tupian();
+        users.setBiaoName("草拟大爷");
+        users.setPath("草拟大爷");
+        users.setPostid("草拟大爷，折腾我，卖麻批");
+        users.save(new SaveListener<String>() {
             @Override
-            public void onFailure(Call call, IOException e) {
-
-            }
-
-            @Override
-            public void onSuccess(Call call, Response response) throws IOException {
-                Log.i("synnn",response.body().string());
+            public void done(String s, BmobException e) {
+                if(e==null){
+                    Log.i("synnn","添加成功"+s);
+                }else{
+                    Log.i("synnn","添加失败"+e.getMessage());
+                }
             }
         });
-        connectUrl.login("","");
+
+
 
     }
 }

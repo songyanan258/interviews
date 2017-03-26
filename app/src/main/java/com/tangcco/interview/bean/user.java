@@ -1,10 +1,17 @@
 package com.tangcco.interview.bean;
 
+import cn.bmob.v3.BmobObject;
+
 /**
  * Created by YN on 2017/3/13.
  */
 
-public class user {
+public class user extends BmobObject {
+
+
+    public user() {
+
+    }
 
     /**
      * createdAt : 2017-03-08 13:15:52
@@ -17,19 +24,27 @@ public class user {
      * updatedAt : 2017-03-13 13:45:47
      * username : admin
      */
-    private String createdAt;
+//    private String createdAt;
     private String password;
     private String funNum;
     private String phone;
     private String sex;
     private String attNumber;
-    private String objectId;
-    private String updatedAt;
+//    private String objectId;
+//    private String updatedAt;
     private String username;
+    private String email;
 
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
+    public String getEmail() {
+        return email;
     }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    /*public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }*/
 
     public void setPassword(String password) {
         this.password = password;
@@ -51,21 +66,21 @@ public class user {
         this.attNumber = attNumber;
     }
 
-    public void setObjectId(String objectId) {
+    /*public void setObjectId(String objectId) {
         this.objectId = objectId;
-    }
+    }*/
 
-    public void setUpdatedAt(String updatedAt) {
+    /*public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
-    }
+    }*/
 
     public void setUsername(String username) {
         this.username = username;
     }
 
-    public String getCreatedAt() {
+    /*public String getCreatedAt() {
         return createdAt;
-    }
+    }*/
 
     public String getPassword() {
         return password;
@@ -87,13 +102,25 @@ public class user {
         return attNumber;
     }
 
-    public String getObjectId() {
+    @Override
+    public String toString() {
+        return "user{" +
+                "password='" + password + '\'' +
+                ", funNum='" + funNum + '\'' +
+                ", phone='" + phone + '\'' +
+                ", sex='" + sex + '\'' +
+                ", attNumber='" + attNumber + '\'' +
+                ", username='" + username + '\'' +
+                '}';
+    }
+
+    /* public String getObjectId() {
         return objectId;
     }
 
     public String getUpdatedAt() {
         return updatedAt;
-    }
+    }*/
 
     public String getUsername() {
         return username;
