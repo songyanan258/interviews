@@ -13,8 +13,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.tangcco.interview.R;
+import com.tangcco.interview.bean.user;
 import com.tangcco.interview.utils.Cons;
+import com.tangcco.interview.utils.Util;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,8 +59,18 @@ public class UserDetailActivity extends AppCompatActivity {
     CircleImageView userdetailCircleHead;
     @BindView(R.id.btn_concal)
     Button btnConcal;
+    @BindView(R.id.detail_tv_nickname)
+    TextView detailTvNickname;
+    @BindView(R.id.detail_tv_sex)
+    TextView detailTvSex;
+    @BindView(R.id.detail_tv_phone)
+    TextView detailTvPhone;
 
     private Intent intent;
+    //判断是否自动登陆
+    private Boolean isSelfLogin = null;
+    //储存用户信息
+    private user mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +88,7 @@ public class UserDetailActivity extends AppCompatActivity {
     }
 
     private void initData() {
+        initUserDetail();
 
     }
 
@@ -104,7 +118,7 @@ public class UserDetailActivity extends AppCompatActivity {
     }
 
 
-    @OnClick({R.id.btn_concal,R.id.userdetail_circle_head, R.id.userdetail_num_fensi, R.id.userdetail_num_fatie, R.id.userdetail_ll_guanzhu, R.id.detail_iv_nicheng, R.id.detail_iv_sex, R.id.detail_iv_phoneNum, R.id.detail_iv_changePass})
+    @OnClick({R.id.btn_concal, R.id.userdetail_circle_head, R.id.userdetail_num_fensi, R.id.userdetail_num_fatie, R.id.userdetail_ll_guanzhu, R.id.detail_iv_nicheng, R.id.detail_iv_sex, R.id.detail_iv_phoneNum, R.id.detail_iv_changePass})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.userdetail_num_fensi:
@@ -118,8 +132,8 @@ public class UserDetailActivity extends AppCompatActivity {
                 break;
             case R.id.detail_iv_nicheng:
                 //昵称点击事件
-                intent = new Intent(this,ChangeActivity.class);
-                intent.putExtra(Cons.CHANGE_TYPE,Cons.CHANGE_USERNAME);
+                intent = new Intent(this, ChangeActivity.class);
+                intent.putExtra(Cons.CHANGE_TYPE, Cons.CHANGE_USERNAME);
                 startActivity(intent);
                 break;
             case R.id.detail_iv_sex:
@@ -127,14 +141,14 @@ public class UserDetailActivity extends AppCompatActivity {
                 break;
             case R.id.detail_iv_phoneNum:
                 //手机号码点击事件
-                intent = new Intent(this,ChangeActivity.class);
-                intent.putExtra(Cons.CHANGE_TYPE,Cons.CHANGE_PHONENUM);
+                intent = new Intent(this, ChangeActivity.class);
+                intent.putExtra(Cons.CHANGE_TYPE, Cons.CHANGE_PHONENUM);
                 startActivity(intent);
                 break;
             case R.id.detail_iv_changePass:
                 //修改密码点击事件
-                intent = new Intent(this,ChangeActivity.class);
-                intent.putExtra(Cons.CHANGE_TYPE,Cons.CHANGE_PASSWORD);
+                intent = new Intent(this, ChangeActivity.class);
+                intent.putExtra(Cons.CHANGE_TYPE, Cons.CHANGE_PASSWORD);
                 startActivity(intent);
                 break;
             case R.id.userdetail_circle_head:
@@ -143,6 +157,23 @@ public class UserDetailActivity extends AppCompatActivity {
             case R.id.btn_concal:
                 //退出按钮点击事件
                 break;
+        }
+    }
+
+    public void initUserDetail() {
+        isSelfLogin = Util.getIsSelfLogin(this);
+        if (true == isSelfLogin) {
+            mUser = Util.getLocalUser(this);
+            Glide.with(this)
+                    .load(mUser.getHead())
+                    .into(userdetailCircleHead);
+            tvNumFensi.setText(mUser.getFunNum());
+            tvNumFatie.setText(mUser.getPostNum());
+            tvNumGuanzhu.setText(mUser.getAttNumber());
+            detailTvNickname.setText(mUser.getNickname());
+            detailTvPhone.setText(mUser.getPhone());
+            detailTvSex.setText(mUser.getSex());
+            toolbarUsername.setText(mUser.getNickname());
         }
     }
 

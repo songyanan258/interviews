@@ -9,6 +9,7 @@
         <!--下划线颜色-->
         <item name="colorControlActivated">@color/primary</item>
         <item name="colorControlHighlight">@color/primary</item>
+
         <!--返回键样式-->
         <item name="drawerArrowStyle">@style/AppTheme.DrawerArrowToggle</item>
         <!--菜单背景色-->
@@ -22,6 +23,9 @@
     <style name="OverFlowMenuTheme" parent="Theme.AppCompat.NoActionBar">
         <!-- 设置Menu窗口不覆盖Toolbar视图 -->
         <item name="overlapAnchor">false</item>
+    </style>
+    <style name="TextInputTheme" parent="Theme.Design.NoActionBar">
+        <item name="colorAccent">@color/primary</item>
     </style>
 
 </resources>

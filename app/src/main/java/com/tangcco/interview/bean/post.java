@@ -11,9 +11,26 @@ public class post extends BmobObject {
         private String contents;
         private String title;
         private String userid;
+        private String zanNum;
+        private String lowNum;
 
+    public String getLowNum() {
+        return lowNum;
+    }
 
-        public void setContents(String contents) {
+    public void setLowNum(String lowNum) {
+        this.lowNum = lowNum;
+    }
+
+    public String getZanNum() {
+        return zanNum;
+    }
+
+    public void setZanNum(String zanNum) {
+        this.zanNum = zanNum;
+    }
+
+    public void setContents(String contents) {
             this.contents = contents;
         }
 

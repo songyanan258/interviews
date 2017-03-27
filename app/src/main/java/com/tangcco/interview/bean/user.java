@@ -28,15 +28,42 @@ public class user extends BmobObject {
     private String password;
     private String funNum;
     private String phone;
+    private String head;
     private String sex;
     private String attNumber;
 //    private String objectId;
 //    private String updatedAt;
     private String username;
     private String email;
+    private String nickname;
+    private String postNum;
+
+    public String getPostNum() {
+        return postNum;
+    }
+
+    public void setPostNum(String postNum) {
+        this.postNum = postNum;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
 
     public String getEmail() {
         return email;
+    }
+
+    public String getHead() {
+        return head;
+    }
+
+    public void setHead(String head) {
+        this.head = head;
     }
 
     public void setEmail(String email) {

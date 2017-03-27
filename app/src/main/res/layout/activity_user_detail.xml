@@ -134,6 +134,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"/>
             <TextView
+                android:id="@+id/detail_tv_nickname"
                 android:textColor="@color/secondary_text"
                 android:gravity="center"
                 android:text="夜未央"
@@ -172,6 +173,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"/>
             <TextView
+                android:id="@+id/detail_tv_sex"
                 android:textColor="@color/secondary_text"
                 android:gravity="center"
                 android:text="女"
@@ -210,6 +212,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"/>
             <TextView
+                android:id="@+id/detail_tv_phone"
                 android:textColor="@color/secondary_text"
                 android:gravity="center"
                 android:text="13843289578"

@@ -18,8 +18,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.tangcco.interview.R;
-import com.tangcco.interview.bean.tupian;
+import com.tangcco.interview.bean.user;
+import com.tangcco.interview.presenter.LoginResoultListener;
+import com.tangcco.interview.utils.ConnectUrl;
 import com.tangcco.interview.utils.Cons;
 import com.tangcco.interview.utils.Util;
 import com.tangcco.interview.view.fragment.LianxiFragment;
@@ -31,8 +34,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.bmob.v3.Bmob;
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.SaveListener;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -77,6 +79,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     LinearLayout drawLlGuanyu;
     @BindView(R.id.draw_ll_call)
     LinearLayout drawLlCall;
+    @BindView(R.id.draw_circle_head)
+    CircleImageView drawCircleHead;
+    @BindView(R.id.draw_username)
+    TextView drawUsername;
 
     //Intent
     private Intent intent;
@@ -89,6 +95,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ArrayList<Fragment> arrayFrag = new ArrayList<Fragment>();
     //碎片适配器
     private FragmentPagerAdapter frgAdapter;
+    //用户信息
+    private user mUser;
+    //本地用户信息是否存在
+    private Boolean isSelfLogin=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,11 +106,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
+        Bmob.initialize(this,"50ed8914e573fcf30aa522e150f977bc");
         initView();
         initData();
         initListener();
-        this.postUser();
+
 
     }
 
@@ -112,6 +122,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void initData() {
         this.setToolbar();
+        if(Cons.isLogin==true){
+            this.initUserDetail();
+        }else{
+            this.loadLogin("admin","123465");
+        }
+//       testChangeUser();
+
+
+
+
 
     }
 
@@ -139,7 +159,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 
 
         initDrawTaggle();
@@ -186,37 +205,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             //用户信息
             case R.id.draw_check_detail:
-                intent.setClass(this,UserDetailActivity.class);
+                intent.setClass(this, UserDetailActivity.class);
                 startActivity(intent);
                 break;
 
             //用户邮箱
             case R.id.draw_email:
-                Util.mToast(this,"用户邮箱");
+                Util.mToast(this, "用户邮箱");
                 break;
             //收藏
             case R.id.draw_ll_shoucang:
-                intent.setClass(this,ShoucangActivity.class);
+                intent.setClass(this, ShoucangActivity.class);
                 startActivity(intent);
                 break;
             //关注
             case R.id.draw_ll_guanzhu:
-                intent.setClass(this,GuanzhuActivity.class);
+                intent.setClass(this, GuanzhuActivity.class);
                 startActivity(intent);
                 break;
             //设置
             case R.id.draw_ll_setting:
-                intent.setClass(this,ShezhiActivity.class);
+                intent.setClass(this, ShezhiActivity.class);
                 startActivity(intent);
                 break;
             //评分
             case R.id.draw_ll_pingfen:
-                intent.setClass(this,OtherActivity.class);
+                intent.setClass(this, OtherActivity.class);
                 startActivity(intent);
                 break;
             //关于
             case R.id.draw_ll_guanyu:
-                intent.setClass(this,OtherActivity.class);
+                intent.setClass(this, OtherActivity.class);
                 startActivity(intent);
                 break;
             default:
@@ -297,36 +316,58 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.action_search:
-                Util.mToast(this,"搜索框");
+                Util.mToast(this, "搜索框");
         }
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main,menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return super.onCreateOptionsMenu(menu);
     }
-    public void postUser(){
-        Bmob.initialize(this, Cons.APPLICATION_ID_VALUE);
-        tupian users = new tupian();
-        users.setBiaoName("草拟大爷");
-        users.setPath("草拟大爷");
-        users.setPostid("草拟大爷，折腾我，卖麻批");
-        users.save(new SaveListener<String>() {
+
+    public void loadLogin(String username,String password) {
+        ConnectUrl<user> url = new ConnectUrl<user>();
+        Bmob.initialize(this,Cons.APPLICATION_ID);
+        Util.mToast(this,"进入登录方法");
+        Bmob.initialize(this,Cons.APPLICATION_ID);
+        url.login(username, password, new LoginResoultListener<user>() {
             @Override
-            public void done(String s, BmobException e) {
-                if(e==null){
-                    Log.i("synnn","添加成功"+s);
-                }else{
-                    Log.i("synnn","添加失败"+e.getMessage());
-                }
+            public void loginResoult(user resoult, Exception e) {
+                   Util.putSharePreference(Cons.SHARE_USER,Cons.USER_DETAIL,Util.toJson(resoult),MainActivity.this);
+
+                    user users = Util.getLocalUser(MainActivity.this);
+                    Glide.with(MainActivity.this)
+                            .load(users.getHead())
+                            .into(drawCircleHead);
+                    drawUsername.setText(users.getNickname());
+                    drawEmail.setText(users.getEmail());
+
             }
         });
+    }
+    //加载本地用户信息
 
-
+    public void initUserDetail(){
+        isSelfLogin = Util.getIsSelfLogin(this);
+        if(true==isSelfLogin){
+            mUser = Util.getLocalUser(this);
+            Glide.with(MainActivity.this)
+                    .load(mUser.getHead())
+                    .into(drawCircleHead);
+            drawUsername.setText(mUser.getNickname());
+            drawEmail.setText(mUser.getEmail());
+            Log.i("synnn",mUser.toString());
+        }
 
     }
+
+    //测试修改用户信息
+    public void testChangeUser(){
+        Util.changeUserDetail(this,Cons.CHANGE_PASSWORD,"123465");
+    }
+
 }
